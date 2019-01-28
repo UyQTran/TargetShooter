@@ -1,8 +1,9 @@
-class SightEngine {
+class Sight {
   int x = 500;
   int y = 500;
   int speed = 10;
-  boolean 
+  int innerSize = 50;
+  int outerSize = 100;
   
   void down() {
     if(y < 1080) {

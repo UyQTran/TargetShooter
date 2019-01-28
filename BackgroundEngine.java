@@ -8,7 +8,7 @@ class BackgroundEngine {
   int starAlpha = 255;
   
   void changeAlpha() {
-    starAlpha-=50;
+    starAlpha -= 50;
     if(starAlpha < 150) {
       starAlpha = 255;
     }
