@@ -2,8 +2,8 @@ class Shot {
   int x, y;
   boolean hasHitTarget;
   int speed = 50;
-  int size = 120;
-  int shrinkSpeed = 12;
+  int size = 100;
+  int shrinkSpeed = 10;
   int targetY;
   
   Shot(int x, int y) {

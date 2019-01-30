@@ -5,6 +5,7 @@ class TargetEngine {
   List<Target> targetList = new ArrayList();
   List<String> levelList = new ArrayList();
   int currentLevel = 0;
+  int gameTime = 0;
   
   TargetEngine() {
     try {
@@ -17,27 +18,44 @@ class TargetEngine {
     }
   }
   
+  void move() {
+    for(Target target : targetList) {
+      if(target.spawnTime <= gameTime) {
+        target.move();
+      }
+    }
+  }
+  
+  void incrementGameTime() {
+    gameTime++;
+  }
+  
+  List<Target> getTargetList() {
+    return targetList;
+  }
+  
   void levelUp() {
     targetList.clear();
     try {
-      Scanner targetScanner = new Scanner(new FileReader(levelList.get(currentLevel)));
-      while(targetScanner.hasNext()) {
-        String[] targetLine = targetScanner.nextLine().split(" ");
+      for(int i = 0; i < new Level().targets.length; i++) {
+        String[] targetLine = new Level().targets[i].split(" ");
+        System.out.println(targetLine[1]);
         Path targetPath = new Path();
-        for(int i = 2; i < targetLine.length; i += 3) {
-          int x = Integer.parseInt(targetLine[i]);
-          int y = targetLine[i+1].parseInt();
-          int speed = targetLine[i+2].parseInt();
+        for(int j = 3; j < targetLine.length; j += 3) {
+          int x = Integer.parseInt(targetLine[j]);
+          int y = Integer.parseInt(targetLine[j+1]);
+          int speed = Integer.parseInt(targetLine[j+2]);
           targetPath.addCoordinate(x, y, speed);
-          
         }
-        int spawnTime = targetLine[0].parseInt();
-        int points = targetLine[1].parseInt();
+        int spawnTime = Integer.parseInt(targetLine[1]);
+        int points = Integer.parseInt(targetLine[2]);
         
-        targetList.add(new Target(targetPath));
+        targetList.add(new Target(spawnTime, points, targetPath));
+        
       }
     } catch(Exception e) {
     
+      System.out.println(e);
     }
     currentLevel++;
   }

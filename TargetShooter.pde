@@ -3,20 +3,32 @@ import java.util.*;
 BackgroundEngine backgroundEngine = new BackgroundEngine();
 Sight sight = new Sight();
 int frameCounter = 0;
-Set<Integer> keyPressed = new HashSet();
+Set<Integer> keyPressed = new HashSet();  
 ShootingEngine shootingEngine = new ShootingEngine();
+TargetEngine targetEngine = new TargetEngine();
 boolean shootFirstPress = true;
 
 void setup() {
   frameRate(60);
   size(1280, 720);
+  targetEngine.levelUp();
 }
 
 void draw() {
   drawBackground();
   drawSight();
   drawShots();
+  drawTargets();
   shootingEngine.move();
+  targetEngine.move();
+  
+  frameCounter++;
+  if(frameCounter % 60 == 0) {
+    targetEngine.incrementGameTime();
+    backgroundEngine.changeAlpha();
+    frameCounter = 0;
+  }
+  
   if(keyPressed.contains(37)) {//left
     sight.left();
   }
@@ -45,6 +57,15 @@ void keyReleased() {
   keyPressed.remove(keyCode);
   if(keyCode == 32) {
     shootFirstPress = true;
+  }
+}
+
+void drawTargets() {
+  List<Target> targetList = targetEngine.getTargetList();
+  fill(255,255,0);
+  
+  for(Target target : targetList) {
+    ellipse(target.currentX, target.currentY, 50, 50);
   }
 }
 
@@ -77,11 +98,6 @@ void drawSight() {
 void drawBackground() {
   background(backgroundEngine.backgroundRed, backgroundEngine.backgroundGreen, backgroundEngine.backgroundBlue);
   drawAllStars();
-  frameCounter++;
-  if(frameCounter > 60) {
-    backgroundEngine.changeAlpha();
-    frameCounter = 0;
-  }
 }
 
 void drawStar(int x, int y) {
