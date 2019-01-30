@@ -16,9 +16,9 @@ void setup() {
 
 void draw() {
   drawBackground();
+  drawTargets();
   drawSight();
   drawShots();
-  drawTargets();
   shootingEngine.move();
   targetEngine.move();
   
@@ -62,10 +62,18 @@ void keyReleased() {
 
 void drawTargets() {
   List<Target> targetList = targetEngine.getTargetList();
-  fill(255,255,0);
   
   for(Target target : targetList) {
+    fill(255,0,0);
     ellipse(target.currentX, target.currentY, 50, 50);
+    fill(255,255,255);
+    ellipse(target.currentX, target.currentY, 40, 40);
+    fill(255,0,0);
+    ellipse(target.currentX, target.currentY, 30, 30);
+    fill(255,255,255);
+    ellipse(target.currentX, target.currentY, 20, 20);
+    fill(255,0,0);
+    ellipse(target.currentX, target.currentY, 10, 10);
   }
 }
 

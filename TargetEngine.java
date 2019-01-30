@@ -7,17 +7,6 @@ class TargetEngine {
   int currentLevel = 0;
   int gameTime = 0;
   
-  TargetEngine() {
-    try {
-      Scanner levelScanner = new Scanner(new FileReader("levelList.txt"));
-      while (levelScanner.hasNext()) {
-        levelList.add(levelScanner.nextLine());
-      }
-    } catch(Exception e) {
-      
-    }
-  }
-  
   void move() {
     for(Target target : targetList) {
       if(target.spawnTime <= gameTime) {
@@ -37,9 +26,8 @@ class TargetEngine {
   void levelUp() {
     targetList.clear();
     try {
-      for(int i = 0; i < new Level().targets.length; i++) {
-        String[] targetLine = new Level().targets[i].split(" ");
-        System.out.println(targetLine[1]);
+      for(int i = 0; i < Level.TARGETS.length; i++) {
+        String[] targetLine = Level.TARGETS[i].split(" ");
         Path targetPath = new Path();
         for(int j = 3; j < targetLine.length; j += 3) {
           int x = Integer.parseInt(targetLine[j]);

@@ -20,7 +20,7 @@ class Target {
   }
   
   void move() {
-    if(targetX == currentX && targetY == currentY) {
+    if(targetX == currentX && targetY == currentY && path.vertexList.size() > 0) {
       Vertex vertex = path.popVertex();
       
       startX = targetX;
@@ -48,12 +48,19 @@ class Target {
   }
   
   void calculateSpeeds() {
-    int firstLeg = Math.abs(startX - targetX);
-    int secondLeg = Math.abs(startY - targetY);
-    int hypotenuse = pythagoras(firstLeg, secondLeg);
-    
-    currentSpeedX = (firstLeg/hypotenuse)/currentSpeed;
-    currentSpeedY = (secondLeg/hypotenuse)/currentSpeed;
+    int firstLeg = Math.abs(Math.abs(startX) - Math.abs(targetX));
+    int secondLeg = Math.abs(Math.abs(startY) - Math.abs(targetY));
+    if(firstLeg == 0) {
+      currentSpeedY = currentSpeed;
+    } else if(secondLeg == 0) {
+      currentSpeedX = currentSpeed;
+    } else {
+      int hypotenuse = pythagoras(firstLeg, secondLeg);
+      
+      currentSpeedX = new Double(((double) firstLeg/hypotenuse)*((double) currentSpeed)).intValue()+1;
+      currentSpeedY = new Double(((double) secondLeg/hypotenuse)*((double) currentSpeed)).intValue()+1;
+      System.out.println(currentSpeedY);
+    }
   }
   
   int pythagoras(int firstLeg, int secondLeg) {
