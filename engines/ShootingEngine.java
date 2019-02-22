@@ -6,6 +6,7 @@ class ShootingEngine {
   void shoot(int x, int y) {
     shotList.add(new Shot(x, y));
   }
+
   
   void move() {
     for(int i = 0; i < shotList.size(); i++) {
